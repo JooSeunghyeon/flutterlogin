@@ -9,7 +9,7 @@ class CustomTextFormField extends StatelessWidget {
   final ValueChanged<String>? onChanged;
 
   const CustomTextFormField(
-      {this.hintText, this.errorText, this.obscureText = false,this.autofocus = false,required this.onChanged, super.key});
+      {this.hintText, this.errorText, this.obscureText = false, this.autofocus = false, required this.onChanged, super.key});
 
   @override
   Widget build(BuildContext context) {
