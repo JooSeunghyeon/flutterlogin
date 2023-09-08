@@ -9,15 +9,48 @@ class RootTab extends StatefulWidget {
   State<RootTab> createState() => _RootTabState();
 }
 
-class _RootTabState extends State<RootTab> {
+class _RootTabState extends State<RootTab> with
+SingleTickerProviderStateMixin{
+  late TabController controller;
+
   int index = 0;
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller = TabController(length: 4, vsync: this); // vsync에는 this를 할려면 SingleTickerProviderStateMixin 써야한다.
+
+    controller.addListener(tabListener);
+
+  }
+
+@override
+  void dispose() {
+    controller.removeListener(tabListener);
+
+    super.dispose();
+  }
+
+  void tabListener(){
+    setState(() {
+      index = controller.index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
       title: '코택 딜리버리',
-      child: Center(
-        child: Text('Root Tab'),
+      child: TabBarView(
+        physics: NeverScrollableScrollPhysics(), // 옆으로 드래그 해서 페이지 이동하는거 막는것
+        controller: controller,
+        children: [
+          Center(child: Container(child: Text('홈'),)),
+          Center(child: Container(child: Text('음식'),)),
+          Center(child: Container(child: Text('주문'),)),
+          Center(child: Container(child: Text('프로필'),)),
+        ],
       ),
         bottomNavigationBar:BottomNavigationBar(
           selectedItemColor: PRIMARY_COLOR,
@@ -26,9 +59,7 @@ class _RootTabState extends State<RootTab> {
           unselectedFontSize: 10,
           type: BottomNavigationBarType.shifting,
           onTap: (int index){
-            setState(() {
-              this.index = index;
-            });
+            controller.animateTo(index);
           },
           currentIndex: index,
           items: [
