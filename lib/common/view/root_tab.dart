@@ -1,5 +1,6 @@
 import 'package:actual/common/const/colors.dart';
 import 'package:actual/common/layout/default_layout.dart';
+import 'package:actual/restaurant/view/restaurant_screen.dart';
 import 'package:flutter/material.dart';
 
 class RootTab extends StatefulWidget {
@@ -24,7 +25,7 @@ SingleTickerProviderStateMixin{
     controller.addListener(tabListener);
 
   }
-
+  // dispose 메서드는 위젯이 위젯 트리에서 완전히 제거될 때 호출된다
 @override
   void dispose() {
     controller.removeListener(tabListener);
@@ -46,7 +47,7 @@ SingleTickerProviderStateMixin{
         physics: NeverScrollableScrollPhysics(), // 옆으로 드래그 해서 페이지 이동하는거 막는것
         controller: controller,
         children: [
-          Center(child: Container(child: Text('홈'),)),
+          RestaurantScreen(),
           Center(child: Container(child: Text('음식'),)),
           Center(child: Container(child: Text('주문'),)),
           Center(child: Container(child: Text('프로필'),)),
