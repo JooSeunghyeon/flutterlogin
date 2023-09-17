@@ -25,14 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
 
-
     final dio = Dio();
-
-    // localhost
-    final emulatorIp = '172.30.1.70:3000'; // 디바이스 연결해서 사용하는경우 같은 와이파이 영역대 잡아두기.
-    final simulatorIp = '127.0.0.1:3000';
-
-    final ip = Platform.isIOS ? simulatorIp : emulatorIp;
 
     return DefaultLayout( // 위젯에 중복 방지를 위해 디폴드레이아웃을 만든다.
       child: SingleChildScrollView( // 키보드 오버플로우 현상방지 스크롤로 만듬.
@@ -110,17 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 TextButton(
                   onPressed: () async{
-                    final refreshToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RAY29kZWZhY3RvcnkuYWkiLCJzdWIiOiJmNTViMzJkMi00ZDY4LTRjMWUtYTNjYS1kYTlkN2QwZDkyZTUiLCJ0eXBlIjoicmVmcmVzaCIsImlhdCI6MTY5Mzc0MDc1OCwiZXhwIjoxNjkzODI3MTU4fQ.W2WXMJEnJzx-ZRg-o85kI_i0MinUJRhVTvLMMvSyQoc';
 
-                    final resp = await dio.post('http://$ip/auth/token',
-                      options: Options(
-                        headers: {
-                          'authorization': 'Bearer $refreshToken',
-                        },
-                      ),
-                    );
-
-                    print(resp.data);
                   },
                   style: TextButton.styleFrom(
                     primary: Colors.black,
