@@ -74,7 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                     Codec<String, String> stringToBase64 = utf8.fuse(base64); //이건 외우는게 좋음 .
 
-                    String token = stringToBase64.encode(rawString);
+                    String token = stringToBase64.encode(rawString); // encode로 token에 담는다.
 
                     final resp = await dio.post('http://$ip/auth/login',
                       options: Options(

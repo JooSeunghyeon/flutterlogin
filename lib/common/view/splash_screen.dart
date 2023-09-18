@@ -35,6 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
     final dio = Dio();
 
     try{
+      // 해당 경로에서 토큰을 가지고 authorization에 Bearer 로 성공 여부를 판단한다.
       final resp = await dio.post('http://$ip/auth/token',
         options: Options(
           headers: {
@@ -45,14 +46,14 @@ class _SplashScreenState extends State<SplashScreen> {
 
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
-            builder: (_) => RootTab(),
+            builder: (_) => RootTab(), // 성공
           ),
               (route) => false);
 
     }catch(e){
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
-          builder: (_) => LoginScreen(),
+          builder: (_) => LoginScreen(), // 실패
         ),
             (route) => false,
       );

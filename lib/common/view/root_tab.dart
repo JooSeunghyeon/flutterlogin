@@ -42,7 +42,7 @@ SingleTickerProviderStateMixin{
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-      title: '코택 딜리버리',
+      title: 'Joo Project',
       child: TabBarView(
         physics: NeverScrollableScrollPhysics(), // 옆으로 드래그 해서 페이지 이동하는거 막는것
         controller: controller,

@@ -10,11 +10,15 @@ class DefaultLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: backgroundColor ?? Colors.white, // 기본색상은 흰색으로 시작한다.
-      appBar: rederAppBar(),
-      body: child,
-      bottomNavigationBar: bottomNavigationBar,
+    return SafeArea(
+      top: true,
+      bottom: false,
+      child: Scaffold(
+        backgroundColor: backgroundColor ?? Colors.white, // 기본색상은 흰색으로 시작한다.
+        appBar: rederAppBar(),
+        body: child,
+        bottomNavigationBar: bottomNavigationBar,
+      ),
     );
   }
 
