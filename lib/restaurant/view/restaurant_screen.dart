@@ -42,22 +42,11 @@ class RestaurantScreen extends StatelessWidget {
               return ListView.separated(
                 // PostMan 기준으로 화면을 가져옴 따로 서버가 있다 TS + Node 기반 .
                 itemBuilder: (_, index) {
-                  final item = snapshot.data![
-                      index]; // 각각의 번호를 item에 넣는다 약간 ? for 문으로 index 지정해주는거랑 비슷 ?
+                  final item = snapshot.data![index]; // 각각의 번호를 item에 넣는다 약간 ? for 문으로 index 지정해주는거랑 비슷 ?
+
                   // parsed 변환되었다는 뜻
-                  final pItem = RestarurantModel( // 클래스르 인스턴스화를 해야 자동완성 기능으로 쓸수가 있다.
-                    id: item['id'],
-                    name: item['name'],
-                    thumbUrl: 'http://$ip${item['thumbUrl']}',
-                    tags: List<String>.from(item['tags']),
-                    priceRange: RestaurantPriceRange.values.firstWhere( // enum 이라서 서버에서 가지고온 데이터 첫번째가 값이 같은걸 넣어준다는 뜻
-                      (e) => e.name == item['priceRange'],
-                    ),
-                    ratings: item['ratings'],
-                    ratingsCount: item['ratingsCount'],
-                    deliveryTime: item['deliveryTime'],
-                    deliveryFee: item['deliveryFee'],
-                  );
+                  final pItem = RestarurantModel.fromJson(json: item);
+
 
                   return RestaurantCard(
                     image: Image.network(
