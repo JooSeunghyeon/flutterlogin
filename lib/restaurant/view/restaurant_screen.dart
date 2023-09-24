@@ -44,27 +44,11 @@ class RestaurantScreen extends StatelessWidget {
                 itemBuilder: (_, index) {
                   final item = snapshot.data![index]; // 각각의 번호를 item에 넣는다 약간 ? for 문으로 index 지정해주는거랑 비슷 ?
 
-                  // parsed 변환되었다는 뜻
+                  // 이런식으로 해두면 중복으로 사용하기도 좋고 , 유집보수 하기도 좋다 모델에서 하나만 바꾸면 다 바뀌기 때문이고 코드도 한눈에 보기가 좋다 .
                   final pItem = RestarurantModel.fromJson(json: item);
 
+                  return RestaurantCard.fromModel(model: pItem);
 
-                  return RestaurantCard(
-                    image: Image.network(
-                      pItem.thumbUrl,
-                      fit: BoxFit.cover,
-                    ),
-                    // image: Image.asset(
-                    //   'asset/img/food.jpg',
-                    //   fit: BoxFit.cover,
-                    // ),
-                    name: pItem.name,
-                    tags: pItem.tags,
-                    // List<dynamic> 으로 들어와야하는데 List<String> 으로 들어와서 형변환 필요
-                    ratingsCount: pItem.ratingsCount,
-                    deliveryTime: pItem.deliveryTime,
-                    ratings: pItem.ratings,
-                    deliveryFee:pItem.deliveryFee,
-                  );
                 },
                 separatorBuilder: (_, index) {
                   return SizedBox(

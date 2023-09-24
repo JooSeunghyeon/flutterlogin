@@ -1,4 +1,5 @@
 import 'package:actual/common/const/colors.dart';
+import 'package:actual/model/restaurant_model.dart';
 import 'package:flutter/material.dart';
 
 class RestaurantCard extends StatelessWidget {
@@ -23,15 +24,34 @@ class RestaurantCard extends StatelessWidget {
   // 평균 평점
   final double ratings;
 
-  const RestaurantCard(
-      {required this.image,
-      required this.name,
-      required this.tags,
-      required this.ratingsCount,
-      required this.deliveryTime,
-      required this.deliveryFee,
-      required this.ratings,
-      super.key});
+
+  const RestaurantCard({
+    required this.image,
+    required this.name,
+    required this.tags,
+    required this.ratingsCount,
+    required this.deliveryTime,
+    required this.deliveryFee,
+    required this.ratings,
+    super.key});
+
+  factory RestaurantCard.fromModel({
+    required RestarurantModel model,
+  }){
+    return RestaurantCard(
+      image: Image.network(
+        model.thumbUrl,
+        fit: BoxFit.cover,
+      ),
+      name: model.name,
+      tags: model.tags,
+      // List<dynamic> 으로 들어와야하는데 List<String> 으로 들어와서 형변환 필요
+      ratingsCount: model.ratingsCount,
+      deliveryTime: model.deliveryTime,
+      ratings: model.ratings,
+      deliveryFee:model.deliveryFee,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +97,7 @@ class RestaurantCard extends StatelessWidget {
                 renderDot(),
                 _IconText(
                   icon: Icons.timelapse_outlined,
-                  label:'$deliveryTime 분' ,
+                  label: '$deliveryTime 분',
                 ),
                 renderDot(),
                 _IconText(
@@ -123,7 +143,7 @@ class _IconText extends StatelessWidget {
   }
 }
 
-Widget renderDot(){
+Widget renderDot() {
   return Padding(
     padding: EdgeInsets.symmetric(horizontal: 4.0),
     child: Text(
