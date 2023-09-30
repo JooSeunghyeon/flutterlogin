@@ -1,6 +1,7 @@
 import 'package:actual/common/const/data.dart';
 import 'package:actual/model/restaurant_model.dart';
 import 'package:actual/restaurant/component/restaurant_card.dart';
+import 'package:actual/restaurant/view/restaurant_detail_screen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -47,8 +48,15 @@ class RestaurantScreen extends StatelessWidget {
                   // 이런식으로 해두면 중복으로 사용하기도 좋고 , 유집보수 하기도 좋다 모델에서 하나만 바꾸면 다 바뀌기 때문이고 코드도 한눈에 보기가 좋다 .
                   final pItem = RestarurantModel.fromJson(json: item);
 
-                  return RestaurantCard.fromModel(model: pItem);
-
+                  return GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => RestaurantDetailScreen(),
+                          ),
+                        );
+                      },
+                      child: RestaurantCard.fromModel(model: pItem));
                 },
                 separatorBuilder: (_, index) {
                   return SizedBox(
