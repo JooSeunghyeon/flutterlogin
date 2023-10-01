@@ -20,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // TODO: implement initState`
     super.initState();
 
-    // deleteToken();
+    //deleteToken();
     checkToken();
   }
 
