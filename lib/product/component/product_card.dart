@@ -6,7 +6,7 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IntrinsicHeight(
+    return IntrinsicHeight( // 위젯의 크기만큼 생성 되서 Intrinsic 쓰면 위젯의 부모 크기 ? 만큼 가능함.
       child: Row(
         children: [
           ClipRRect(
