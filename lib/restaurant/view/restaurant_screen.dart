@@ -42,7 +42,7 @@ class RestaurantScreen extends StatelessWidget {
                 );
               }
 
-              return ListView.separated(
+              return ListView.separated( // ListView.Builder 형태에서 구분선이 필요할 때 사용.
                 // PostMan 기준으로 화면을 가져옴 따로 서버가 있다 TS + Node 기반 .
                 itemBuilder: (_, index) {
                   final item = snapshot.data![index]; // 각각의 번호를 item에 넣는다 약간 ? for 문으로 index 지정해주는거랑 비슷 ?
@@ -54,7 +54,7 @@ class RestaurantScreen extends StatelessWidget {
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (_) => RestaurantDetailScreen(id: pItem.id,),
+                            builder: (_) => RestaurantDetailScreen(id: pItem.id, name: pItem.name),
                           ),
                         );
                       },

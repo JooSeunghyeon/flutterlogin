@@ -8,9 +8,11 @@ import 'package:flutter/material.dart';
 
 class RestaurantDetailScreen extends StatelessWidget {
   final String id;
+  final String name;
 
   const RestaurantDetailScreen({
     required this.id,
+    required this.name,
     super.key,
   });
 
@@ -31,7 +33,7 @@ class RestaurantDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-        title: '불타는 떡볶이',
+        title: name,
         child: FutureBuilder<Map<String, dynamic>>(
           future: getRestaurantDetail(),
           builder: (_, AsyncSnapshot<Map<String, dynamic>> snapshot) {
@@ -49,7 +51,9 @@ class RestaurantDetailScreen extends StatelessWidget {
                   model: item,
                 ),
                 renderLabel(),
-                renderProducts(),
+                renderProducts(
+                  products: item.products,
+                ),
               ],
             );
           },
@@ -72,18 +76,22 @@ class RestaurantDetailScreen extends StatelessWidget {
     );
   }
 
-  SliverPadding renderProducts() {
+  SliverPadding renderProducts({
+    required List<RestaurantProductModel> products,
+}) {
     return SliverPadding(
       padding: EdgeInsets.symmetric(horizontal: 16.0),
       sliver: SliverList(
         delegate: SliverChildBuilderDelegate(
               (context, index) {
+                final model = products[index];
+
             return Padding(
               padding: const EdgeInsets.only(top: 16.0),
-              child: ProductCard(),
+              child: ProductCard.fromModel(model: model),
             );
           },
-          childCount: 10,
+          childCount: products.length,
         ),
       ),
     );
