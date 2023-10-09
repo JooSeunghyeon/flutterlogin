@@ -48,7 +48,7 @@ class RestaurantScreen extends StatelessWidget {
                   final item = snapshot.data![index]; // 각각의 번호를 item에 넣는다 약간 ? for 문으로 index 지정해주는거랑 비슷 ?
 
                   // 이런식으로 해두면 중복으로 사용하기도 좋고 , 유집보수 하기도 좋다 모델에서 하나만 바꾸면 다 바뀌기 때문이고 코드도 한눈에 보기가 좋다 .
-                  final pItem = RestarurantModel.fromJson(json: item);
+                  final pItem = RestarurantModel.fromJson(item);
 
                   return GestureDetector(
                       onTap: () {

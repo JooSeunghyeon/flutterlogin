@@ -82,7 +82,7 @@ class RestaurantDetailScreen extends StatelessWidget {
     return SliverPadding(
       padding: EdgeInsets.symmetric(horizontal: 16.0),
       sliver: SliverList(
-        delegate: SliverChildBuilderDelegate(
+        delegate: SliverChildBuilderDelegate( // FutureBuild 같은거임.
               (context, index) {
                 final model = products[index];
 
