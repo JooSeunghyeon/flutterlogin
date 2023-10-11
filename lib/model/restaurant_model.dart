@@ -1,4 +1,5 @@
 import 'package:actual/common/const/data.dart';
+import 'package:actual/common/utils/data_utils.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'restaurant_model.g.dart';
@@ -19,7 +20,7 @@ class RestarurantModel {
    -- flutter pub run build_runner watch 를 쓰면 파일이 변경될때 마다 새로 빌드가 된다.
    */
   @JsonKey(
-    fromJson: pathToUrl,
+    fromJson: DataUtils.pathToUrl,
   )
   final String thumbUrl;
   final List<String> tags;
@@ -46,9 +47,6 @@ class RestarurantModel {
 
   Map<String, dynamic> toJson() => _$RestarurantModelToJson(this);
 
-  static pathToUrl(String value) {
-    return 'http://$ip$value';
-  }
 
   // 이걸 json_serializable 을 써서 같은걸 반복하니 자동화 할려고 위에처럼 쓰인다.
   // factory RestarurantModel.fromJson({
