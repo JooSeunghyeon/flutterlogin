@@ -1,4 +1,5 @@
 import 'package:actual/common/const/data.dart';
+import 'package:actual/common/dio/dio.dart';
 import 'package:actual/common/layout/default_layout.dart';
 import 'package:actual/model/restaurant_detail_model.dart';
 import 'package:actual/product/component/product_card.dart';
@@ -19,6 +20,12 @@ class RestaurantDetailScreen extends StatelessWidget {
 
   Future<RestarurantDetailModel> getRestaurantDetail() async {
     final dio = Dio();
+    // 인터셉터로 연결한다 .
+    dio.interceptors.add(
+      CustomInterceptor(
+        storage: storge,
+      ),
+    );
 
     // final accessToken = await storge.read(key: ACCESS_TOKEN_KEY);
     //
