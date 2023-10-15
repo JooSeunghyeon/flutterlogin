@@ -3,6 +3,7 @@ import 'package:actual/common/layout/default_layout.dart';
 import 'package:actual/model/restaurant_detail_model.dart';
 import 'package:actual/product/component/product_card.dart';
 import 'package:actual/restaurant/component/restaurant_card.dart';
+import 'package:actual/restaurant/repository/restaurant_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -16,43 +17,53 @@ class RestaurantDetailScreen extends StatelessWidget {
     super.key,
   });
 
-  Future<Map<String, dynamic>> getRestaurantDetail() async {
+  Future<RestarurantDetailModel> getRestaurantDetail() async {
     final dio = Dio();
-    final accessToken = await storge.read(key: ACCESS_TOKEN_KEY);
 
-    final resp = await dio.get(
-      'http://$ip/restaurant/$id',
-      options: Options(headers: {
-        'authorization': 'Bearer $accessToken',
-      }),
-    );
+    // final accessToken = await storge.read(key: ACCESS_TOKEN_KEY);
+    //
+    // final resp = await dio.get(
+    //   'http://$ip/restaurant/$id',
+    //   options: Options(headers: {
+    //     'authorization': 'Bearer $accessToken',
+    //   }),
+    // );
+    //
+    // return resp.data;
 
-    return resp.data;
+    // TODO 위의 코드가 원래 코드이다 그치만 이것도 중복이다 그래서 retrofit 을 이용해 중복을 방지한다.
+    final repository = RestaurantRepository(dio, baseUrl: 'http://$ip/restaurant');
+
+    return repository.getRestaurantDetail(id: id);
   }
 
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
         title: name,
-        child: FutureBuilder<Map<String, dynamic>>(
+        child: FutureBuilder<RestarurantDetailModel>(
           future: getRestaurantDetail(),
-          builder: (_, AsyncSnapshot<Map<String, dynamic>> snapshot) {
+          builder: (_, AsyncSnapshot<RestarurantDetailModel> snapshot) {
+            if(snapshot.hasError){
+              return Center(
+                child: Text(snapshot.error.toString(),),
+              );
+            }
+
             if (!snapshot.hasData) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
             }
 
-            final item = RestarurantDetailModel.fromJson(snapshot.data!,);
-
             return CustomScrollView(
               slivers: [
                 renderTop(
-                  model: item,
+                  model: snapshot.data!,
                 ),
                 renderLabel(),
                 renderProducts(
-                  products: item.products,
+                  products: snapshot.data!.products,
                 ),
               ],
             );
