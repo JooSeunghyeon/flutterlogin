@@ -44,7 +44,7 @@ class RestaurantCard extends StatelessWidget {
     super.key});
 
   factory RestaurantCard.fromModel({
-    required RestarurantModel model,
+    required RestaurantModel model,
     bool isDetail = false,
   }){
     return RestaurantCard(

@@ -5,7 +5,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'restaurant_detail_model.g.dart';
 
 @JsonSerializable()
-class RestarurantDetailModel extends RestarurantModel {
+class RestarurantDetailModel extends RestaurantModel {
   // 비슷한 데이터가 오는데 굳이 새로 생성하면 번거롭다 그럴때 상속을 받아서 기존 모델에 super로 상속받아서 사용한다.
 
   final String detail;
