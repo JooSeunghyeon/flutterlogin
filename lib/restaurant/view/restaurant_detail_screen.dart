@@ -7,8 +7,9 @@ import 'package:actual/restaurant/component/restaurant_card.dart';
 import 'package:actual/restaurant/repository/restaurant_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class RestaurantDetailScreen extends StatelessWidget {
+class RestaurantDetailScreen extends ConsumerWidget {
   final String id;
   final String name;
 
@@ -18,42 +19,20 @@ class RestaurantDetailScreen extends StatelessWidget {
     super.key,
   });
 
-  Future<RestarurantDetailModel> getRestaurantDetail() async {
-    final dio = Dio();
-    // 인터셉터로 연결한다 .
-    dio.interceptors.add(
-      CustomInterceptor(
-        storage: storge,
-      ),
-    );
-
-    // final accessToken = await storge.read(key: ACCESS_TOKEN_KEY);
-    //
-    // final resp = await dio.get(
-    //   'http://$ip/restaurant/$id',
-    //   options: Options(headers: {
-    //     'authorization': 'Bearer $accessToken',
-    //   }),
-    // );
-    //
-    // return resp.data;
-
-    // TODO 위의 코드가 원래 코드이다 그치만 이것도 중복이다 그래서 retrofit 을 이용해 중복을 방지한다.
-    final repository = RestaurantRepository(dio, baseUrl: 'http://$ip/restaurant');
-
-    return repository.getRestaurantDetail(id: id);
-  }
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return DefaultLayout(
         title: name,
         child: FutureBuilder<RestarurantDetailModel>(
-          future: getRestaurantDetail(),
+          future: ref.watch(restaurantRepositoryProvider).getRestaurantDetail(
+            id: id,
+          ),
           builder: (_, AsyncSnapshot<RestarurantDetailModel> snapshot) {
-            if(snapshot.hasError){
+            if (snapshot.hasError) {
               return Center(
-                child: Text(snapshot.error.toString(),),
+                child: Text(
+                  snapshot.error.toString(),
+                ),
               );
             }
 
@@ -75,8 +54,7 @@ class RestaurantDetailScreen extends StatelessWidget {
               ],
             );
           },
-        )
-    );
+        ));
   }
 
   SliverPadding renderLabel() {
@@ -96,13 +74,14 @@ class RestaurantDetailScreen extends StatelessWidget {
 
   SliverPadding renderProducts({
     required List<RestaurantProductModel> products,
-}) {
+  }) {
     return SliverPadding(
       padding: EdgeInsets.symmetric(horizontal: 16.0),
       sliver: SliverList(
-        delegate: SliverChildBuilderDelegate( // FutureBuild 같은거임.
-              (context, index) {
-                final model = products[index];
+        delegate: SliverChildBuilderDelegate(
+          // FutureBuild 같은거임.
+          (context, index) {
+            final model = products[index];
 
             return Padding(
               padding: const EdgeInsets.only(top: 16.0),
@@ -116,7 +95,7 @@ class RestaurantDetailScreen extends StatelessWidget {
   }
 
   SliverToBoxAdapter renderTop({
-      required RestarurantDetailModel model,
+    required RestarurantDetailModel model,
   }) {
     return SliverToBoxAdapter(
       child: RestaurantCard.fromModel(

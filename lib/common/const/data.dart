@@ -11,5 +11,3 @@ final emulatorIp = '172.30.1.70:3000'; // 디바이스 연결해서 사용하는
 final simulatorIp = '127.0.0.1:3000';
 
 final ip = Platform.isIOS ? simulatorIp : emulatorIp;
-
-final storge = FlutterSecureStorage();
